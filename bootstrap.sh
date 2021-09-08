@@ -30,6 +30,7 @@ apt autoremove -y
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 nvm install --lst
 nvm install v14.17.5
+#
 
 tar zxvf neovim.tar.gz
 make CMAKE_BUILD_TYPE=Release -C neovim-0.5.0
@@ -38,6 +39,10 @@ make install
 wget https://golang.org/dl/go1.17.linux-amd64.tar.gz
 rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17.linux-amd64.tar.gz
 echo "export PATH=\$PATH:/usr/local/go/bin" >> /etc/profile
+
+wget https://download.oracle.com/otn-pub/java/jdk/16.0.2%2B7/d4a915d82b4c4fbb9bde534da945d746/jdk-16.0.2_linux-x64_bin.deb
+dpkg -i jdk-16.0.2_linux-x64_bin.deb
+
 
 # anything past here needs to be done for the regular user too
 curl https://pyenv.run | bash
