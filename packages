@@ -59,7 +59,6 @@ dnsutils
 diffutils
 findutils
 iptables
-iputils
 python3-setuptools
 less
 apache2

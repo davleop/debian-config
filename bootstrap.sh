@@ -18,12 +18,15 @@ for package in $(cat packages); do
   DEBIAN_FRONTEND=noninteractive apt install -y $package
 done
 
+sudo snap install iputils
+
 apt update -y
 apt upgrade -y
 apt autoremove -y
 
 # install for regular user too
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+source $HOME/.bashrc
 nvm install --lst
 nvm install v14.17.5
 #
