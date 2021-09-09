@@ -37,8 +37,8 @@ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17.linux-amd64.tar.gz
 echo "export PATH=\$PATH:/usr/local/go/bin" >> /etc/profile
 
 wget https://download.oracle.com/otn-pub/java/jdk/16.0.2%2B7/d4a915d82b4c4fbb9bde534da945d746/jdk-16.0.2_linux-x64_bin.tar.gz
-tar -C /opt zxvf jdk-16.0.2_linux-x64_bin.tar.gz
-echo 'export PATH="/opt/jdk-16.0.2/bin:$PATH"'
+tar zxvf jdk-16.0.2_linux-x64_bin.tar.gz -C /opt
+echo 'export PATH="/opt/jdk-16.0.2/bin:$PATH"' >> /etc/profile
 
 # anything past here needs to be done for the regular user too
 curl https://pyenv.run | bash
