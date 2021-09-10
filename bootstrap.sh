@@ -44,6 +44,22 @@ wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-secureback
 tar zxvf jdk-16.0.2_linux-x64_bin.tar.gz -C /opt
 echo 'export PATH="/opt/jdk-16.0.2/bin:$PATH"' >> .bashrc
 
+# *** setup /etc/skel *** #
+cp .bash_aliases /etc/skel
+cp .bashrc /etc/skel
+cp .dircolors /etc/skel
+cp .profile /etc/skel
+cp .tmux.conf /etc/skel
+# ***                 *** #
+
+# copy hidden skel files into current home dirs
+for i in $(ls /home); do
+  cp -r /etc/skel/* /home/$i
+  cp -r /etc/skel/.[^.]* /home/$i
+  cp -r /etc/skel/* $HOME
+  cp -r /etc/skel/.[^.]* $HOME
+done
+
 # anything past here needs to be done for the regular user too
 curl https://pyenv.run | bash
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> $HOME/.bashrc
@@ -60,18 +76,5 @@ ssh-add $HOME/.ssh/id_rsa
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 source $HOME/.cargo/env
 
-# *** setup /etc/skel *** #
-cp .bash_aliases /etc/skel
-cp .bashrc /etc/skel
-cp .dircolors /etc/skel
-cp .profile /etc/skel
-cp .tmux.conf /etc/skel
-# ***                 *** #
 
-# copy hidden skel files into current home dirs
-for i in $(ls /home); do
-  cp -r /etc/skel/* /home/$i
-  cp -r /etc/skel/.[^.]* /home/$i
-  cp -r /etc/skel/* $HOME
-  cp -r /etc/skel/.[^.]* $HOME
-done
+
