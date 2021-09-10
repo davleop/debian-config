@@ -32,7 +32,7 @@ nvm install v14.17.5
 #
 
 tar zxvf neovim.tar.gz
-make CMAKE_BUILD_TYPE=Release -C neovim-0.5.0
+make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr/local/nvim -C neovim-0.5.0
 make install
 
 wget https://golang.org/dl/go1.17.linux-amd64.tar.gz
