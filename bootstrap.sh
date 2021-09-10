@@ -70,8 +70,8 @@ cp .tmux.conf /etc/skel
 
 # copy hidden skel files into current home dirs
 for i in $(ls /home); do
-  cp -r /etc/skel/* $i
-  cp -r /etc/skel/.[^.]* $i
+  cp -r /etc/skel/* /home/$i
+  cp -r /etc/skel/.[^.]* /home/$i
   cp -r /etc/skel/* $HOME
   cp -r /etc/skel/.[^.]* $HOME
 done
