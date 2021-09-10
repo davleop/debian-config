@@ -33,11 +33,12 @@ nvm install v14.17.5
 
 tar zxvf neovim.tar.gz
 make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr/local/nvim -C neovim-0.5.0
-make install
+make install -C neovim-0.5.0
+echo 'export PATH="\$PATH:/usr/local/nvim"' >> /etc/profile
 
 wget https://golang.org/dl/go1.17.linux-amd64.tar.gz
 rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17.linux-amd64.tar.gz
-echo "export PATH=\$PATH:/usr/local/go/bin" >> /etc/profile
+echo 'export PATH="\$PATH:/usr/local/go/bin"' >> /etc/profile
 
 wget https://download.oracle.com/otn-pub/java/jdk/16.0.2%2B7/d4a915d82b4c4fbb9bde534da945d746/jdk-16.0.2_linux-x64_bin.tar.gz
 tar zxvf jdk-16.0.2_linux-x64_bin.tar.gz -C /opt
