@@ -25,10 +25,10 @@ apt upgrade -y
 apt autoremove -y
 
 # install for regular user too
-# ! taking this out because it fails to install node...
-#curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-#nvm install --lst
-#nvm install v14.17.5
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+source $HOME/.bashrc
+nvm install --lst
+nvm install v14.17.5
 #
 
 tar zxvf neovim.tar.gz
