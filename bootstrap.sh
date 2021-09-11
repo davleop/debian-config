@@ -11,8 +11,8 @@ if [ $(id -u) -ne 0 ]; then
   exit 1
 fi
 
-sudo apt update -y
-sudo apt install -y software-properties-common
+apt update -y
+apt install -y software-properties-common
 add-apt-repository universe
 apt update -y
 
@@ -20,7 +20,7 @@ for package in $(cat packages); do
   DEBIAN_FRONTEND=noninteractive apt install -y $package
 done
 
-sudo snap install iputils
+snap install iputils
 
 apt update -y
 apt upgrade -y
@@ -53,6 +53,7 @@ for i in $(ls /home); do
   cp -r /etc/skel/.[^.]* /home/$i
   mkdir -p /home/$i/.config/nvim
   cp init.vim /home/$i/.config/nvim
+  chown -R $i:$i /home/$i
 
   cp -r /etc/skel/* $HOME
   cp -r /etc/skel/.[^.]* $HOME
@@ -64,7 +65,7 @@ cp init.vim $HOME/.config/nvim
 ##############################################################
 ##############################################################
 # anything past here needs to be done for the regular user too
-curl https://pyenv.run | bash
+jurl https://pyenv.run | bash
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> $HOME/.bashrc
 echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> $HOME/.bashrc
 echo 'eval "$(pyenv init --path)"' >> $HOME/.bashrc
@@ -83,7 +84,7 @@ source $HOME/.cargo/env
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-nvm install --lst
+nvm install --lts
 nvm install v14.17.5
 
 curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
