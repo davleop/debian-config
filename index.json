@@ -10,7 +10,8 @@
 		"go": ["go.sh",0],
 		"java": ["java.sh",0],
 		"addskel": ["addskel.sh",0],
-		"updateoldusers": ["updateoldusers.sh",10]
+		"updateoldusers": ["updateoldusers.sh",10],
+		"installtmux": ["install-tmux.sh",0]
 	},
 	"user": {
 		"pyenv": ["pyenv.sh",0],

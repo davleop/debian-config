@@ -1,4 +1,5 @@
 #!/bin/bash
+pushd /etc/skel
 getent passwd |
   while IFS=: read username x uid guid gecos home shell
   do
@@ -12,3 +13,4 @@ do
   [[ ! -d $home ]] && continue
   tar -cf - -C /etc/skel . | sudo -Hu "$user" tar --overwrite -xf -
 done
+popd
