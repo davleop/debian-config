@@ -3,6 +3,8 @@
 # Initial script to run to setup base environment before other scripts are ran
 
 # *** this script must be run as root *** #
+# this is also meant to setup the root user
+# as similar as it can be to the user
 
 if [ $(id -u) -ne 0 ]; then
   echo "$0 must be run as root"
@@ -55,8 +57,12 @@ for i in $(ls /home); do
   cp -r /etc/skel/* $HOME
   cp -r /etc/skel/.[^.]* $HOME
 done
-cp init.vim /home/$HOME/.config/nvim
+mkdir -p $HOME/.config/nvim
+cp init.vim $HOME/.config/nvim
 
+##############################################################
+##############################################################
+##############################################################
 # anything past here needs to be done for the regular user too
 curl https://pyenv.run | bash
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> $HOME/.bashrc
@@ -80,5 +86,7 @@ export NVM_DIR="$HOME/.nvm"
 nvm install --lst
 nvm install v14.17.5
 
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+npm install -g tldr
 
