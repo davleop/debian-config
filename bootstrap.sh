@@ -65,7 +65,7 @@ cp init.vim $HOME/.config/nvim
 ##############################################################
 ##############################################################
 # anything past here needs to be done for the regular user too
-jurl https://pyenv.run | bash
+curl https://pyenv.run | bash
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> $HOME/.bashrc
 echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> $HOME/.bashrc
 echo 'eval "$(pyenv init --path)"' >> $HOME/.bashrc

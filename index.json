@@ -2,6 +2,7 @@
 	"root": {
 		"update": ["update.sh",0],
 		"upgrade": ["upgrade.sh",0],
+		"autoremove": ["autoremove.sh",0],
 		"adduniverse": ["adduniverse.sh",0],
 		"packageinstall": ["packageinstall.sh",1],
 		"snapinstall": ["snapinstall.sh",1],
@@ -12,5 +13,12 @@
 		"updateoldusers": ["updateoldusers.sh",10]
 	},
 	"user": {
+		"pyenv": ["pyenv.sh",0],
+		"sshkey": ["sshkey.sh",0],
+		"rust": ["rust.sh",0],
+		"nvm": ["nvm.sh",0],
+		"plugvim": ["plugvim.sh",0],
+		"npm": ["npm.sh",1],
+		"fuck": ["fuck.sh",0]
 	}
 }
