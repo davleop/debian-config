@@ -24,13 +24,6 @@ apt update -y
 apt upgrade -y
 apt autoremove -y
 
-# install for regular user too
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-source $HOME/.bashrc
-nvm install --lst
-nvm install v14.17.5
-#
-
 tar zxvf neovim.tar.gz
 make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr/local/nvim -C neovim-0.5.0
 make install -C neovim-0.5.0
@@ -56,9 +49,13 @@ cp .tmux.conf /etc/skel
 for i in $(ls /home); do
   cp -r /etc/skel/* /home/$i
   cp -r /etc/skel/.[^.]* /home/$i
+  mkdir -p /home/$i/.config/nvim
+  cp init.vim /home/$i/.config/nvim
+
   cp -r /etc/skel/* $HOME
   cp -r /etc/skel/.[^.]* $HOME
 done
+cp init.vim /home/$HOME/.config/nvim
 
 # anything past here needs to be done for the regular user too
 curl https://pyenv.run | bash
@@ -75,6 +72,9 @@ ssh-add $HOME/.ssh/id_rsa
 
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 source $HOME/.cargo/env
+
+# install for regular user too
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 
 
 
