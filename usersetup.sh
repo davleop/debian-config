@@ -26,6 +26,6 @@ curl -fLo $HOME/.local/share/nvim/site/autoload/plug.vim --create-dirs https://r
 
 npm install -g tldr
 
-pip install install thefuck --user
+pip install thefuck --user
 echo 'eval $(thefuck --alias)' >> $HOME/.bashrc
 
