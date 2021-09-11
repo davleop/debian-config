@@ -76,5 +76,6 @@
 	"gettext": "apt",
 	"libtool": "apt",
 	"thefuck": "apt",
+	"software-properties-common": "apt",
 	"iputils": "snap"
 }
