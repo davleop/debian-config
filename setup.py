@@ -6,16 +6,16 @@ import json
 import argparse
 
 from sys import exit
-from subprocess import PIPE
 from subprocess import run as srun
 
 # CONSTANTS
-SUDO    = False
-APT     = 'index/packageinstall.sh'
-SNAP    = 'index/snapinstall.sh'
-UPDATE  = 'index/update.sh'
-UPGRADE = 'index/upgrade.sh'
-AUTORM  = 'index/autoremove.sh'
+SUDO = False
+
+# Load shell files from index
+with open('index.json') as f:
+    _index = json.load(f)
+ROOT = _index['root']
+USER = _index['user']
 
 # check if user has privileges
 if os.getuid() == 0:
@@ -30,33 +30,112 @@ args = parser.parse_args()
 def run(cmd):
     return srun(cmd, shell=True, capture_output=True)
 
-def install_packages(package_json_path):
+### *** SUDO *** ###
+def permissions():
     if not SUDO:
         parser.print_help()
         exit(1)
+
+def update():
+    permissions()
+    return run([ROOT['update'][0]])
+
+def upgrade():
+    permissions()
+    return run([ROOT['upgrade'][0]])
+
+def autoremove():
+    permissions()
+    return run([ROOT['autoremove'][0]])
+
+def adduniverse():
+    permissions()
+    return run([ROOT['adduniverse'][0]])
+
+def packageinstall(package):
+    permissions()
+    return run([ROOT['packageinstall'][0], package])
+
+def snapinstall(package):
+    permissions()
+    return run([ROOT['snapinstall'][0], package])
+
+def install_packages(package_json_path):
+    permissions()
 
     with open(package_json_path) as f:
         packages = json.load(f)
 
     for k, v in packages.items():
-        if v == 'apt':
-            run([APT, k])
+        if   v == 'apt':
+            packageinstall(k)
         elif v == 'snap':
-            run([SNAP, k])
+            snapinstall(k)
         else:
-            raise Exception('Invalid or unknown package manager')
+            raise Exception('Supported package managers are (apt/snap)')
 
 def neovim():
-    pass
+    permissions()
+    return run([ROOT['neovim'][0]])
 
 def go():
-    pass
+    permissions()
+    return run([ROOT['go'][0]])
 
 def java():
-    pass
+    permissions()
+    return run([ROOT['java'][0]])
+
+def addskel():
+    permissions()
+    return run([ROOT['addskel'][0]])
+
+def updateoldusers(overwrite=False):
+    permissions()
+
+    if overwrite:
+        return run([ROOT['updateoldusers'][0], "overwrite"])
+    else:
+        return run([ROOT['updateoldusers'][0]])
+
+def updaterootshell(overwrite=False):
+    permissions()
+
+    if overwrite:
+        return run([ROOT['updaterootshell'][0], "overwrite"])
+    else:
+        return run([ROOT['updaterootshell'][0]])
+
+def installtmux():
+    permissions()
+    return run([ROOT['installtmux'][0]])
+
+### *** SUDO *** ###
+
+### *** USER *** ###
+
+def pyenv():
+    return run([USER['pyenv'][0]])
+
+def sshkey():
+    return run([USER['sshkey'][0]])
 
 def rust():
-    pass
+    return run([USER['rust'][0]])
+
+def nvm():
+    return run([USER['nvm'][0]])
+
+def plugvim():
+    return run([USER['plugvim'][0]])
+
+def npm(package):
+    return run([USER['npm'][0], package])
+
+def fuck():
+    return run([USER['fuck'][0]])
+
+### *** USER *** ###
 
 def main():
     pass

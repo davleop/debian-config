@@ -1,7 +1,7 @@
 #!/bin/bash
-cp .bash_aliases /etc/skel
-cp .bashrc /etc/skel
-cp .dircolors /etc/skel
-cp .profile /etc/skel
-cp .tmux.conf /etc/skel
+cp ../dotfiles/.bash_aliases /etc/skel
+cp ../dotfiles/.bashrc /etc/skel
+cp ../dotfiles/.dircolors /etc/skel
+cp ../dotfiles/.profile /etc/skel
+cp ../dotfiles/.tmux.conf /etc/skel
 

@@ -1,25 +1,25 @@
 {
 	"root": {
-		"update": ["update.sh",0],
-		"upgrade": ["upgrade.sh",0],
-		"autoremove": ["autoremove.sh",0],
-		"adduniverse": ["adduniverse.sh",0],
-		"packageinstall": ["packageinstall.sh",1],
-		"snapinstall": ["snapinstall.sh",1],
-		"neovim": ["neovim.sh",0],
-		"go": ["go.sh",0],
-		"java": ["java.sh",0],
-		"addskel": ["addskel.sh",0],
-		"updateoldusers": ["updateoldusers.sh",10],
-		"installtmux": ["install-tmux.sh",0]
+		"update": ["index/update.sh",0],
+		"upgrade": ["index/upgrade.sh",0],
+		"autoremove": ["index/autoremove.sh",0],
+		"adduniverse": ["index/adduniverse.sh",0],
+		"packageinstall": ["index/packageinstall.sh",1],
+		"snapinstall": ["index/snapinstall.sh",1],
+		"neovim": ["index/neovim.sh",0],
+		"go": ["index/go.sh",0],
+		"java": ["index/java.sh",0],
+		"addskel": ["index/addskel.sh",0],
+		"updateoldusers": ["index/updateoldusers.sh",10],
+		"installtmux": ["index/install-tmux.sh",0]
 	},
 	"user": {
-		"pyenv": ["pyenv.sh",0],
-		"sshkey": ["sshkey.sh",0],
-		"rust": ["rust.sh",0],
-		"nvm": ["nvm.sh",0],
-		"plugvim": ["plugvim.sh",0],
-		"npm": ["npm.sh",1],
-		"fuck": ["fuck.sh",0]
+		"pyenv": ["index/pyenv.sh",0],
+		"sshkey": ["index/sshkey.sh",0],
+		"rust": ["index/rust.sh",0],
+		"nvm": ["index/nvm.sh",0],
+		"plugvim": ["index/plugvim.sh",0],
+		"npm": ["index/npm.sh",1],
+		"fuck": ["index/fuck.sh",0]
 	}
 }

@@ -77,5 +77,6 @@
 	"libtool": "apt",
 	"thefuck": "apt",
 	"software-properties-common": "apt",
-	"iputils": "snap"
+	"iputils": "snap",
+	"tldr": "npm"
 }
