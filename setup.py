@@ -1,14 +1,18 @@
-#!/bin/false
+#!/usr/bin/python3
 # please use `python3` command to execute
 
 import os
 import sys
 import json
-import inspect
+#import inspect
 import argparse
 
 from sys import exit
 from subprocess import run as srun
+
+if sys.version_info < (3,6):
+    print('Please upgrade your Python version to 3.6.0 or higher')
+    exit(1)
 
 # CONSTANTS
 SUDO  = False
@@ -26,13 +30,13 @@ if os.getuid() == 0:
 
 ### parser block ###
 parser = argparse.ArgumentParser(description='Setup script for installing a base Debian config')
-parser.add_argument('--do-everything', '-e', action='store_true', help='Requires root permissions. Will setup everything')
+parser.add_argument('--do-everything', '-e', action='store_true', help='Requires root permissions. Will setup everything in my configuration for all users')
 args = parser.parse_args()
 
 def run(cmd):
     return srun(cmd, shell=True, capture_output=True)
 
-### *** SUDO *** ###
+### \/ \/ \/ SUDO \/ \/ \/ ###
 def permissions():
     if not SUDO:
         parser.print_help()
@@ -73,6 +77,8 @@ def install_packages(package_json_path):
             packageinstall(k)
         elif v == 'snap':
             snapinstall(k)
+        elif v == 'npm':
+            pass
         else:
             raise Exception('Supported package managers are (apt/snap)')
 
@@ -112,9 +118,13 @@ def installtmux():
     permissions()
     return run([ROOT['installtmux'][0]])
 
-### *** SUDO *** ###
+def runas(usr,cmd):
+    permissions()
+    return run(['runuser','-l',usr,'-c',cmd])
 
-### *** USER *** ###
+### /\ /\ /\ SUDO /\ /\ /\ ###
+
+### \/ \/ \/ USER \/ \/ \/ ###
 
 def pyenv():
     return run([USER['pyenv'][0]])
@@ -134,36 +144,77 @@ def plugvim():
 def npm(package):
     return run([USER['npm'][0], package])
 
+def install_all_npm():
+    with open(package_json_path) as f:
+        packages = json.load(f)
+
+    for k, v in packages.items():
+        if   v == 'apt': pass
+        elif v == 'snap': pass
+        elif v == 'npm':
+            npm(k)
+        else:
+            raise Exception('Supported package managers are (apt/snap)')
+
 def fuck():
     return run([USER['fuck'][0]])
 
-### *** USER *** ###
+### /\ /\ /\ USER /\ /\ /\ ###
 
-def get_funcs():
-    funcs = [name for name,obj in inspect.getmembers(sys.modules[__name__]) if inspect.isfunction(obj)]
-    funcs.pop(funcs.index('main'))
-    funcs.pop(funcs.index('get_funcs'))
-    funcs.pop(funcs.index('run'))
-    return funcs
+#def get_funcs():
+#    funcs = [
+#        name for name,obj in inspect.getmembers(sys.modules[__name__]) if inspect.isfunction(obj)
+#    ]
+#    funcs.pop(funcs.index('main'))
+#    funcs.pop(funcs.index('get_funcs'))
+#    funcs.pop(funcs.index('run'))
+#    return funcs
+
+def list_users():
+    return os.listdir('/home')
 
 def do_everything():
-    update()
-    adduniverse()
-    update()
-    install_packages(PACKS)
-    update()
-    upgrade()
-    autoremove()
-    neovim()
-    go()
-    java()
-    addskel()
-    updateoldusers(True)
-    updaterootshell(True)
-    installtmux()
+    root_calls = [
+        update,
+        adduniverse,
+        update,
+        install_packages,
+        update,
+        upgrade,
+        autoremove,
+        neovim,
+        go,
+        java,
+        addskel,
+        updateoldusers,
+        updaterootshell,
+        installtmux
+    ]
+
+    user_calls = []
+    for k,v in USER.items():
+        user_calls.append(k)
+
+    for func in root_calls:
+        if   func is install_packages:
+            print(func, PACKS)
+        elif func is updateoldusers:
+            print(func, True)
+        elif func is updaterootshell:
+            print(func, True)
+        else:
+            pass
+
+    for usr in list_users():
+        for func in user_calls:
+            if eval(func) is npm:
+                print(install_all_npm, PACKS)
+            else:
+                print(eval(func), USER[func][0])
 
 def main():
-    pass
+    if args.do_everything:
+        do_everything()
 
 if __name__ == '__main__':
     main()
