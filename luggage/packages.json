@@ -1,4 +1,5 @@
 {
+	"software-properties-common": "apt",
 	"python3": "apt",
 	"man-db": "apt",
 	"manpages-posix": "apt",
@@ -76,7 +77,6 @@
 	"gettext": "apt",
 	"libtool": "apt",
 	"thefuck": "apt",
-	"software-properties-common": "apt",
 	"iputils": "snap",
 	"tldr": "npm"
 }

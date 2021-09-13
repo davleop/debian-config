@@ -2,14 +2,17 @@
 # please use `python3` command to execute
 
 import os
+import sys
 import json
+import inspect
 import argparse
 
 from sys import exit
 from subprocess import run as srun
 
 # CONSTANTS
-SUDO = False
+SUDO  = False
+PACKS = 'luggage/packages.json'
 
 # Load shell files from index
 with open('index.json') as f:
@@ -23,7 +26,6 @@ if os.getuid() == 0:
 
 ### parser block ###
 parser = argparse.ArgumentParser(description='Setup script for installing a base Debian config')
-# parser.add_argument('--option', '-o', help='')
 parser.add_argument('--do-everything', '-e', action='store_true', help='Requires root permissions. Will setup everything')
 args = parser.parse_args()
 
@@ -136,6 +138,29 @@ def fuck():
     return run([USER['fuck'][0]])
 
 ### *** USER *** ###
+
+def get_funcs():
+    funcs = [name for name,obj in inspect.getmembers(sys.modules[__name__]) if inspect.isfunction(obj)]
+    funcs.pop(funcs.index('main'))
+    funcs.pop(funcs.index('get_funcs'))
+    funcs.pop(funcs.index('run'))
+    return funcs
+
+def do_everything():
+    update()
+    adduniverse()
+    update()
+    install_packages(PACKS)
+    update()
+    upgrade()
+    autoremove()
+    neovim()
+    go()
+    java()
+    addskel()
+    updateoldusers(True)
+    updaterootshell(True)
+    installtmux()
 
 def main():
     pass
