@@ -120,7 +120,7 @@ def installtmux():
 
 def runas(usr,cmd):
     permissions()
-    return run(['runuser','-l',usr,'-c',f'"{cmd}"'])
+    return run([f'su {usr}','-c',f'"{cmd}"'])
 
 ### /\ /\ /\ SUDO /\ /\ /\ ###
 
