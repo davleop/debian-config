@@ -231,10 +231,9 @@ def main():
 
     success = []
     failure = []
-    print(executions)
-    '''
     if executions:
         for p in executions:
+            if p is None: continue
             if p.returncode == 0:
                 success.append(log(p.args,p.returncode,p.stdout,p.stderr))
             else:
@@ -246,7 +245,6 @@ def main():
     f.write('\n'.join(failure))
     s.close()
     f.close()
-    '''
 
 if __name__ == '__main__':
     main()
