@@ -195,26 +195,53 @@ def do_everything():
     for k,v in USER.items():
         user_calls.append(k)
 
+    executions = []
+
     for func in root_calls:
         if   func is install_packages:
-            print(func, PACKS)
+            executions.append(func(PACKS))
         elif func is updateoldusers:
-            print(func, True)
+            executions.append(func(True))
         elif func is updaterootshell:
-            print(func, True)
+            executions.append(func(True))
         else:
-            pass
+            executions.append(func())
 
     for usr in list_users():
         for func in user_calls:
             if eval(func) is npm:
-                print(install_all_npm, PACKS)
+                executions.append(install_all_npm, PACKS)
             else:
-                print(eval(func), USER[func][0])
+                executions.append(runas(usr,USER[func][0]))
+
+    return executions
+
+def log(cmd, rc, sout, serr):
+    return f'{cmd}::RC[{rc}]\nSTDOUT:{sout}\n\nSTDERR: {serr}\n\n'
 
 def main():
+    if len(sys.argv) <= 1:
+        parser.print_help()
+        exit(0)
+    executions = []
     if args.do_everything:
-        do_everything()
+        executions = do_everything()
+
+    success = []
+    failure = []
+    if executions:
+        for p in executions:
+            if p.returncode == 0:
+                success.append(log(p.args,p.returncode,p.stdout,p.stderr))
+            else:
+                failure.append(log(p.args,p.returncode,p.stdout,p.stderr))
+
+    s = open('success.log','w')
+    f = open('failure.log','w')
+    s.write('\n'.join(success))
+    f.write('\n'.join(failure))
+    s.close()
+    f.close()
 
 if __name__ == '__main__':
     main()
