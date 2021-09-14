@@ -10,7 +10,8 @@
 		"go": ["index/go.sh",0],
 		"java": ["index/java.sh",0],
 		"addskel": ["index/addskel.sh",0],
-		"updateoldusers": ["index/updateoldusers.sh",10],
+		"updateoldusers": ["index/updateoldusers.sh",1],
+		"updaterootshell": ["index/updaterootshell.sh",1],
 		"installtmux": ["index/install-tmux.sh",0]
 	},
 	"user": {
