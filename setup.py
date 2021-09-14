@@ -231,6 +231,8 @@ def main():
 
     success = []
     failure = []
+    print(failure)
+    '''
     if executions:
         for p in executions:
             if p.returncode == 0:
@@ -244,6 +246,7 @@ def main():
     f.write('\n'.join(failure))
     s.close()
     f.close()
+    '''
 
 if __name__ == '__main__':
     main()
