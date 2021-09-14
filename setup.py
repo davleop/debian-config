@@ -144,7 +144,7 @@ def plugvim():
 def npm(package):
     return run([USER['npm'][0], package])
 
-def install_all_npm():
+def install_all_npm(package_json_path):
     with open(package_json_path) as f:
         packages = json.load(f)
 
