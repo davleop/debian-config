@@ -231,7 +231,7 @@ def main():
 
     success = []
     failure = []
-    print(failure)
+    print(executions)
     '''
     if executions:
         for p in executions:
