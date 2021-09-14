@@ -212,7 +212,7 @@ def do_everything():
         for func in user_calls:
             print(f'Executing {func}')
             if eval(func) is npm:
-                executions.append(install_all_npm, PACKS)
+                executions.append(install_all_npm(PACKS))
             else:
                 executions.append(runas(usr,USER[func][0]))
 
