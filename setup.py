@@ -16,10 +16,11 @@ if sys.version_info < (3,6):
 
 # CONSTANTS
 SUDO  = False
-PACKS = 'luggage/packages.json'
+CWD   = os.getcwd()
+PACKS = CWD + '/luggage/packages.json'
 
 # Load shell files from index
-with open('index.json') as f:
+with open(CWD + '/index.json') as f:
     _index = json.load(f)
 ROOT = _index['root']
 USER = _index['user']
@@ -96,7 +97,7 @@ def java():
 
 def addskel():
     permissions()
-    return run([ROOT['addskel'][0]])
+    return run([ROOT['addskel'][0], CWD])
 
 def updateoldusers(overwrite=False):
     permissions()
@@ -120,7 +121,7 @@ def installtmux():
 
 def runas(usr,cmd):
     permissions()
-    return run([f'su - {usr} -s "{cmd}"'])
+    return run([f'su - {usr} -s "cd {CWD} ; {cmd}"'])
 
 ### /\ /\ /\ SUDO /\ /\ /\ ###
 
@@ -219,7 +220,7 @@ def do_everything():
     return executions
 
 def log(cmd, rc, sout, serr):
-    return f'{cmd}::RC[{rc}]\nSTDOUT:{sout}\n\nSTDERR: {serr}\n\n'
+    return f'{cmd}::RC[{rc}]\nSTDOUT:{sout}\n\nSTDERR: {serr}\n\n{str("-"*80)}'
 
 def main():
     if len(sys.argv) <= 1:
