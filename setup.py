@@ -81,19 +81,19 @@ def install_packages(package_json_path):
         elif v == 'npm':
             pass
         else:
-            raise Exception('Supported package managers are (apt/snap)')
+            raise Exception('Supported package managers are (apt/snap/npm)')
 
 def neovim():
     permissions()
-    return run([ROOT['neovim'][0]])
+    return run([ROOT['neovim'][0],CWD])
 
 def go():
     permissions()
-    return run([ROOT['go'][0]])
+    return run([ROOT['go'][0],CWD])
 
 def java():
     permissions()
-    return run([ROOT['java'][0]])
+    return run([ROOT['java'][0],CWD])
 
 def addskel():
     permissions()
@@ -215,7 +215,7 @@ def do_everything():
             if eval(func) is npm:
                 executions.append(install_all_npm(PACKS))
             else:
-                executions.append(runas(usr,USER[func][0]))
+                executions.append(runas(usr,f'{CWD}/{USER[func][0]}'))
 
     return executions
 
