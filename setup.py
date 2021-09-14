@@ -198,6 +198,7 @@ def do_everything():
     executions = []
 
     for func in root_calls:
+        print(f'Executing {func.__name__}')
         if   func is install_packages:
             executions.append(func(PACKS))
         elif func is updateoldusers:
@@ -209,6 +210,7 @@ def do_everything():
 
     for usr in list_users():
         for func in user_calls:
+            print(f'Executing {func}')
             if eval(func) is npm:
                 executions.append(install_all_npm, PACKS)
             else:
