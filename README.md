@@ -1,2 +1,2 @@
-# debian-config
-My configuration scripts for Debian (primarily Ubuntu) environments
+# debian-config (deprecated)
+My (unfinished) configuration scripts for Debian (primarily Ubuntu) environments
